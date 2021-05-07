@@ -1,0 +1,45 @@
+container: < Bare metal / VM / container >
+containers - isolated execution env
+
+bare metal - application / service is directly deployed onto the machine. no virtualization
+VM - H/W is virtualized using a hypervisor to run multiple OS ( and independent apps in those VMs)
+container - virtualized OS. libraries and apps are isolated within their own namespace (isolated exe env)
+
+Containers are isolated execution environments.
+AKA jails, zones, virtual private servers, virtual environments
+In the past:
+Bare metal: no virtualization
+Virtual machine: virtualized hardware; isolated OS, libraries, applications
+Containers:
+Operating system-level virtualization
+Isolated libraries and applications
+
+monolithic architecture vs micro services
+######## launching container ###########
+docker run alpine
+docker container ls
+docker container list
+docker container ls -a
+docker run -it --name cntrname alpine (interactive)
+docker run -dt --restart always/unless-stopped/on-failure/no --name bg_cntr alpine ( persistent container which restarts )
+docker run -it --name rm-test --rm alpine (a test container that is removed after exiting from interactive shell)
+
+######### accessing container ###########
+docker start cntrname ( to start an exited container )
+docker exec cntrname apk add nginx
+docker exec -it cntrnname ash (or /bin/bash)
+docker cp cntrname:<filepath> <destlocation> / docker cp <sourcefilepath> cntrname:<dest_path>
+
+######### container management ###########
+docker rm cntrname
+docker container prune <remove all unwanted containers >
+docker rename cntrname newcntrname
+docker stop
+docker restart
+docker stats cntrname ( cpu, mem, i/o etc)
+
+######### publishing the container ########
+docker exec -dt cntrname nginx -g 'pid /tmp/nginx.pid; daemon off; &'
+docker inspect cntrname
+docker commit cntrname cntr01
+docker run -p 80:80 -dt --name cntr02 cntr01
