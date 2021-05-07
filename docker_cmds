@@ -43,3 +43,25 @@ docker exec -dt cntrname nginx -g 'pid /tmp/nginx.pid; daemon off; &'
 docker inspect cntrname
 docker commit cntrname cntr01
 docker run -p 80:80 -dt --name cntr02 cntr01
+
+########### Image ##############
+image is the source of container, comprised of layers. (all code, runtime, lib, variables, configurations etc). Layers are cached.
+hub.docker.com/_/hello-world
+FROM scratch ( creating a base image and not depending on a parent image at all )
+A baseimage is an image based on the scratch template, with the first layer defining the file system.
+A parent image is the image the current docker images is based on.
+
+docker build ./Dockerfile -t appimg
+docker run -dt --name app1 appimg
+
+########### image management ############
+docker pull alpine
+docker image ls
+docker image rm hello-world
+docker image prune -a
+docker image inspect
+
+############ Docker hub
+hub.docker.com
+docker tag appimage username/repo:latest
+docker push username/repo
